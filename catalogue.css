@@ -1,0 +1,29 @@
+/* PAGE CATALOGUE */
+
+.catalogue-description {
+    max-width: 650px;
+    margin-top: 25px;
+    margin-bottom: 30px;
+
+    color: #65736d;
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+.catalogue-info {
+    margin-top: 45px;
+    padding: 20px;
+
+    background-color: #e8eee6;
+    border-left: 4px solid #1d352d;
+
+    color: #1d352d;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Masquer les objets lors du filtrage */
+
+.produit[hidden] {
+    display: none;
+}
