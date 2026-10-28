@@ -1,0 +1,5 @@
+// Connexion à la base de données Supabase
+const supabaseClient = window.supabase.createClient(
+    'https://sielavusqsgialmujikg.supabase.co',
+    'sb_publishable_Iz-4xyXFoMW453Aw_zxrQw_iWSAZlOB'
+);document.querySelectorAll('.boutique-filtres').forEach(zone=>{const cards=zone.parentElement.querySelectorAll('.produit');zone.querySelectorAll('.filtre').forEach(btn=>btn.addEventListener('click',()=>{zone.querySelectorAll('.filtre').forEach(b=>b.classList.remove('actif'));btn.classList.add('actif');const cat=btn.dataset.categorie||btn.dataset.filtre;cards.forEach(card=>card.hidden=cat!=='tous'&&cat!=='tout'&&card.dataset.categorie!==cat)}))});document.querySelectorAll('.favori').forEach(btn=>btn.addEventListener('click',()=>{btn.classList.toggle('actif');btn.textContent=btn.classList.contains('actif')?'♥':'♡'}));document.querySelectorAll('form[data-demo]').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();form.querySelector('.form-feedback').textContent='Formulaire prêt : envoi réel à connecter au serveur.'}));

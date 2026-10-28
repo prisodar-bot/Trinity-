@@ -1,0 +1,617 @@
+/* ========================================= */
+/* 1. COULEURS ET PARAMÈTRES */
+/* ========================================= */
+
+:root {
+    --vert: #1d352d;
+    --orange: #df6244;
+    --beige: #faf8f3;
+    --gris: #65736d;
+    --jaune: #f4e4a4;
+    --vert-clair: #ceddca;
+    --rose: #e8b09e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background-color: var(--beige);
+    font-family: Arial, sans-serif;
+    color: var(--vert);
+}
+
+
+/* ========================================= */
+/* 2. BARRE SUPÉRIEURE */
+/* ========================================= */
+
+.top-bar {
+    width: 100%;
+    background-color: var(--vert);
+    color: white;
+    padding: 13px 0;
+    font-size: 13px;
+}
+
+.top-bar-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ========================================= */
+/* 3. MENU DE NAVIGATION */
+/* ========================================= */
+
+.site-header {
+    width: 100%;
+    background-color: var(--beige);
+    padding: 30px 0;
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+
+/* LOGO */
+
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: var(--vert);
+    flex-shrink: 0;
+}
+
+.logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    background-color: var(--orange);
+    color: white;
+
+    border-radius: 10px;
+    font-size: 25px;
+}
+
+.logo-text {
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.logo-text strong {
+    display: block;
+    color: var(--orange);
+
+    font-family: Georgia, serif;
+    font-size: 18px;
+    font-style: italic;
+}
+
+
+/* LIENS DU MENU */
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 35px;
+
+    margin-left: auto;
+}
+
+.site-nav a {
+    color: var(--gris);
+    text-decoration: none;
+
+    font-size: 15px;
+    white-space: nowrap;
+
+    transition: color 0.3s ease;
+}
+
+.site-nav a:hover {
+    color: var(--orange);
+}
+
+
+/* BOUTON DONNER */
+
+.header-don {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 16px 28px;
+
+    background-color: var(--vert);
+    color: white;
+
+    border-radius: 30px;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: bold;
+    white-space: nowrap;
+
+    transition: background-color 0.3s ease;
+}
+
+.header-don:hover {
+    background-color: var(--orange);
+}
+
+
+/* ========================================= */
+/* 4. SECTION BOUTIQUE */
+/* ========================================= */
+
+.boutique-section {
+    background-color: var(--beige);
+
+    min-height: 750px;
+    padding: 60px 0 120px;
+}
+
+.boutique-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+
+/* PETIT TITRE ORANGE */
+
+.boutique-label {
+    color: var(--orange);
+
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    margin: 0 0 20px;
+}
+
+
+/* ========================================= */
+/* 5. GRAND TITRE */
+/* ========================================= */
+
+.boutique-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.boutique-header h1 {
+    font-family: Georgia, serif;
+
+    font-size: 58px;
+    font-weight: normal;
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    color: var(--vert);
+    margin: 0;
+}
+
+.boutique-header h1 span {
+    color: var(--orange);
+}
+
+
+/* BOUTON TOUT VOIR */
+
+.boutique-voir-tout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent;
+    color: var(--vert);
+
+    border: 1px solid #cbd4ca;
+    border-radius: 35px;
+
+    padding: 16px 25px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+    white-space: nowrap;
+
+    transition: all 0.3s ease;
+}
+
+.boutique-voir-tout:hover {
+    background-color: var(--vert);
+    color: white;
+}
+
+
+/* ========================================= */
+/* 6. FILTRES DES CATÉGORIES */
+/* ========================================= */
+
+.boutique-filtres {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin-top: 40px;
+    margin-bottom: 32px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #e0e4dc;
+}
+
+.filtre {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 15px 20px;
+
+    border: 1px solid #d7dfd4;
+    border-radius: 30px;
+
+    background-color: transparent;
+    color: var(--gris);
+
+    font-size: 12px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.filtre:hover {
+    border-color: var(--vert);
+}
+
+.filtre span {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.filtre.actif {
+    background-color: var(--vert);
+    color: white;
+    border-color: var(--vert);
+}
+
+
+/* ========================================= */
+/* 7. GRILLE DES OBJETS */
+/* ========================================= */
+
+.boutique-produits {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.produit {
+    min-width: 0;
+}
+
+
+/* ========================================= */
+/* 8. IMAGES DES PRODUITS */
+/* ========================================= */
+
+.produit-image {
+    position: relative;
+
+    width: 100%;
+    height: 310px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+
+
+/* FONDS COLORÉS */
+
+.fond-jaune {
+    background-color: var(--jaune);
+}
+
+.fond-vert {
+    background-color: var(--vert-clair);
+}
+
+.fond-rose {
+    background-color: var(--rose);
+}
+
+
+/* ILLUSTRATIONS */
+
+.produit-emoji {
+    font-size: 110px;
+
+    transition: transform 0.3s ease;
+}
+
+.produit:hover .produit-emoji {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+
+/* ========================================= */
+/* 9. BOUTONS FAVORIS */
+/* ========================================= */
+
+.favori {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background-color: var(--beige);
+    color: var(--vert);
+
+    font-size: 23px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+}
+
+.favori:hover {
+    transform: scale(1.1);
+}
+
+.favori.actif {
+    color: var(--orange);
+}
+
+
+/* ========================================= */
+/* 10. DISPONIBILITÉ */
+/* ========================================= */
+
+.disponible {
+    position: absolute;
+
+    bottom: 15px;
+    left: 15px;
+
+    background-color: var(--beige);
+    color: var(--vert);
+
+    padding: 9px 12px;
+
+    border-radius: 5px;
+    font-size: 11px;
+}
+
+
+/* ========================================= */
+/* 11. INFORMATIONS DES PRODUITS */
+/* ========================================= */
+
+.produit-infos {
+    padding: 16px 2px;
+}
+
+.produit-titre {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.produit-titre h3 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    color: var(--vert);
+}
+
+.prix {
+    color: var(--orange);
+
+    font-size: 17px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.produit-infos p {
+    margin: 8px 0 0;
+
+    color: #87948d;
+    font-size: 13px;
+}
+
+
+/* ========================================= */
+/* 12. BAS DE LA BOUTIQUE */
+/* ========================================= */
+
+.boutique-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.boutique-footer p {
+    margin: 0;
+
+    color: #87948d;
+    font-size: 12px;
+}
+
+.boutique-footer a {
+    color: var(--orange);
+
+    font-size: 14px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    transition: opacity 0.3s ease;
+}
+
+.boutique-footer a:hover {
+    opacity: 0.7;
+}
+
+
+/* ========================================= */
+/* 13. RESPONSIVE TABLETTE */
+/* ========================================= */
+
+@media (max-width: 1100px) {
+
+    .header-container {
+        flex-wrap: wrap;
+    }
+
+    .site-nav {
+        order: 3;
+        width: 100%;
+
+        justify-content: center;
+        flex-wrap: wrap;
+
+        margin-left: 0;
+        gap: 20px;
+    }
+
+    .boutique-header h1 {
+        font-size: 46px;
+    }
+
+    .boutique-produits {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* ========================================= */
+/* 14. RESPONSIVE MOBILE */
+/* ========================================= */
+
+@media (max-width: 600px) {
+
+    .top-bar-container {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .site-header {
+        padding: 20px 0;
+    }
+
+    .header-container {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .site-nav {
+        gap: 15px;
+    }
+
+    .site-nav a {
+        font-size: 12px;
+    }
+
+    .header-don {
+        padding: 13px 22px;
+    }
+
+    .boutique-section {
+        padding: 45px 0 80px;
+    }
+
+    .boutique-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .boutique-header h1 {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    .boutique-filtres {
+        margin-top: 30px;
+    }
+
+    .filtre {
+        padding: 12px 15px;
+    }
+
+    .boutique-produits {
+        grid-template-columns: 1fr;
+    }
+
+    .produit-image {
+        height: 300px;
+    }
+
+    .boutique-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+.logo-officiel {
+    width: 240px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
