@@ -2,29 +2,34 @@
 
 set -e
 
-# Load database configuration
-if [ ! -f .env ]; then
-    echo "Error: .env file not found."
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+MYSQL_DIR="$SCRIPT_DIR/mysql"
+
+if [ -f "$REPO_ROOT/backend/.env" ]; then
+    ENV_FILE="$REPO_ROOT/backend/.env"
+elif [ -f "$REPO_ROOT/.env" ]; then
+    ENV_FILE="$REPO_ROOT/.env"
+else
+    echo "Error: .env file not found (looked in backend/.env and repo root)."
     exit 1
 fi
 
 set -a
-source .env
+# shellcheck disable=SC1090
+source "$ENV_FILE"
 set +a
 
-# Check required variables
 if [ -z "$DB_HOST" ] || [ -z "$DB_USER" ] || [ -z "$DB_NAME" ]; then
-    echo "Error: Missing database configuration in .env."
+    echo "Error: Missing database configuration in $ENV_FILE."
     exit 1
 fi
 
-# Check MySQL client
 if ! command -v mysql >/dev/null 2>&1; then
     echo "Error: MySQL client is not installed."
     exit 1
 fi
 
-# Function to execute a SQL file
 run_sql() {
     local file="$1"
 
@@ -49,7 +54,6 @@ run_sql() {
     echo "Successfully executed $file."
 }
 
-# Execute all SQL files
 if [ "$1" = "--all" ]; then
     shift
 
@@ -59,10 +63,10 @@ if [ "$1" = "--all" ]; then
     fi
 
     shopt -s nullglob
-    files=( *.sql )
+    files=( "$MYSQL_DIR"/*.sql )
 
     if [ "${#files[@]}" -eq 0 ]; then
-        echo "No SQL files found."
+        echo "No SQL files found in $MYSQL_DIR."
         exit 0
     fi
 
@@ -70,16 +74,25 @@ if [ "$1" = "--all" ]; then
         run_sql "$file"
     done
 
-# Execute specified SQL files
 elif [ "$#" -gt 0 ]; then
     for file in "$@"; do
-        run_sql "$file"
+        if [ -f "$file" ]; then
+            run_sql "$file"
+        elif [ -f "$MYSQL_DIR/$file" ]; then
+            run_sql "$MYSQL_DIR/$file"
+        elif [ -f "$SCRIPT_DIR/$file" ]; then
+            run_sql "$SCRIPT_DIR/$file"
+        else
+            echo "Error: File '$file' not found."
+            exit 1
+        fi
     done
 
 else
     echo "Usage:"
-    echo "  ./run.sh --all"
-    echo "  ./run.sh file1.sql file2.sql ..."
+    echo "  ./sql/run_sql.sh --all"
+    echo "  ./sql/run_sql.sh sql/mysql/creation.sql"
+    echo "  ./sql/run_sql.sh creation.sql"
     exit 1
 fi
 
