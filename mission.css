@@ -1,0 +1,507 @@
+/* BARRE SUPÉRIEURE *   /    
+    /* ===================================== */
+/* PAGE NOTRE MISSION */
+/* ===================================== */
+
+
+/* SECTION BEIGE */
+
+.mission-section {
+    background-color: #faf8f3;
+    padding: 100px 11%;
+    min-height: 580px;
+}
+
+
+/* ORGANISATION EN 3 COLONNES */
+
+.mission-container {
+    display: grid;
+
+    grid-template-columns: 240px 1fr 340px;
+
+    gap: 55px;
+
+    align-items: start;
+}
+
+
+/* PETIT TITRE */
+
+.mission-label p {
+    color: #df6244;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+}
+
+
+/* TITRE PRINCIPAL */
+
+.mission-content h1 {
+    font-family: Georgia, serif;
+
+    font-size: 62px;
+    line-height: 1.05;
+
+    letter-spacing: -2px;
+
+    color: #1d352d;
+
+    margin-bottom: 25px;
+}
+
+
+/* MOTS ORANGE */
+
+.mission-content h1 span {
+    color: #df6244;
+}
+
+
+/* DESCRIPTION */
+
+.mission-description {
+    color: #65736d;
+
+    font-size: 17px;
+    line-height: 1.8;
+
+    margin-bottom: 35px;
+}
+
+
+/* LIEN IMPACT */
+
+.mission-link {
+    color: #df6244;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.mission-link:hover {
+    gap: 25px;
+}
+
+
+/* TÉMOIGNAGE */
+
+.mission-temoignage {
+    background-color: #dce6d4;
+
+    padding: 30px;
+
+    margin-top: 45px;
+}
+
+
+/* GUILLEMETS */
+
+.guillemet {
+    font-family: Georgia, serif;
+
+    font-size: 65px;
+
+    color: #df6244;
+
+    line-height: 1;
+}
+
+
+/* TEXTE DU TÉMOIGNAGE */
+
+.citation {
+    font-family: Georgia, serif;
+
+    font-size: 23px;
+
+    line-height: 1.2;
+
+    color: #1d352d;
+
+    margin: 20px 0 25px;
+}
+
+
+/* AUTEUR */
+
+.auteur {
+    font-size: 11px;
+
+    color: #65736d;
+}
+
+
+
+/* ===================================== */
+/* SECTION IMPACT */
+/* ===================================== */
+
+.impact-section {
+    background-color: #1d352d;
+
+    padding: 90px 11%;
+
+    color: white;
+}
+
+
+/* CONTENEUR */
+
+.impact-container {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 70px;
+}
+
+
+/* TITRE DE GAUCHE */
+
+.impact-intro {
+    min-width: 350px;
+    position: relative;
+}
+
+
+/* PETIT TEXTE */
+
+.impact-label {
+    color: #dce6d4;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 25px;
+}
+
+
+/* GRAND TITRE */
+
+.impact-intro h2 {
+    font-family: Georgia, serif;
+
+    font-size: 55px;
+    line-height: 1;
+
+    letter-spacing: -2px;
+}
+
+
+/* MOT COMPTE EN JAUNE */
+
+.impact-intro h2 span {
+    color: #f0cc57;
+    display: block;
+}
+
+
+/* PETITE FEUILLE */
+
+.feuille {
+    position: absolute;
+
+    right: 0;
+    bottom: 0;
+
+    font-size: 50px;
+
+    color: #89a884;
+}
+
+
+/* STATISTIQUES */
+
+.impact-stats {
+    display: flex;
+
+    flex: 1;
+
+    justify-content: space-between;
+}
+
+
+/* CHAQUE STATISTIQUE */
+
+.stat {
+    flex: 1;
+
+    padding: 15px 30px;
+
+    border-left: 1px solid #52665d;
+}
+
+
+/* CHIFFRES JAUNES */
+
+.stat h3 {
+    font-family: Georgia, serif;
+
+    font-size: 50px;
+
+    color: #f0cc57;
+
+    margin-bottom: 15px;
+}
+
+
+/* TEXTE SOUS LES CHIFFRES */
+
+.stat p {
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #e1e8df;
+}
+
+
+
+/* ===================================== */
+/* RESPONSIVE MOBILE */
+/* ===================================== */
+
+@media (max-width: 1100px) {
+
+    .mission-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .mission-section {
+        padding: 60px 6%;
+    }
+
+    .mission-content h1 {
+        font-size: 45px;
+    }
+
+    .mission-temoignage {
+        margin-top: 0;
+    }
+
+    .impact-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .impact-intro {
+        min-width: auto;
+    }
+
+    .impact-stats {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .stat {
+        min-width: 180px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .mission-content h1 {
+        font-size: 38px;
+    }
+
+    .impact-intro h2 {
+        font-size: 45px;
+    }
+
+    .impact-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .stat h3 {
+        font-size: 42px;
+    }
+
+}
+/* ================================= */
+/* BARRE SUPÉRIEURE */
+/* ================================= */
+
+.top-bar {
+    background-color: #1d352d;
+    color: #ffffff;
+    padding: 10px 0;
+    font-size: 12px;
+}
+
+.top-bar-container {
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* ================================= */
+/* MENU DE NAVIGATION */
+/* ================================= */
+
+.site-header {
+    background-color: #faf8f3;
+    padding: 25px 0;
+}
+
+.header-container {
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+
+/* LOGO */
+
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    text-decoration: none;
+    color: #1d352d;
+}
+
+.logo-icon {
+    background-color: #df6244;
+    color: white;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    font-size: 25px;
+}
+
+.logo-text {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.logo-text strong {
+    display: block;
+    color: #df6244;
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+}
+
+
+/* LIENS */
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+    margin-left: auto;
+}
+
+.site-nav a {
+    text-decoration: none;
+    color: #65736d;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.site-nav a:hover {
+    color: #df6244;
+}
+
+
+/* BOUTON DON */
+
+.header-don {
+    background-color: #1d352d;
+    color: white;
+
+    padding: 15px 25px;
+    border-radius: 30px;
+
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+.header-don:hover {
+    background-color: #df6244;
+}
+
+
+/* ================================= */
+/* RESPONSIVE */
+/* ================================= */
+
+@media (max-width: 900px) {
+
+    .header-container {
+        flex-wrap: wrap;
+    }
+
+    .site-nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .top-bar-container {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    .site-nav {
+        gap: 15px;
+    }
+
+    .site-nav a {
+        font-size: 12px;
+    }
+
+}
+.logo-officiel {
+    width: 240px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
