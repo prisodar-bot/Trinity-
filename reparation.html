@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Objets à réparer – La Ressourcerie du Quartier</title>
+  
+  <style>body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+[hidden]{display:none!important}
+
+.rep{--vert:#2f6b35;--vert-f:#1f4a25;--jaune:#f0a818;--rouge:#c8372d;--creme:#f3eedd;--papier:#fbfaf5;
+  display:grid;grid-template-columns:minmax(280px,340px) 1fr;gap:28px;align-items:start;
+  padding:28px;min-height:100vh;background:var(--creme);color:#2b2b2b}
+.rep *{box-sizing:border-box}
+
+/* Cartes et scotch */
+.rep-card{position:relative;background:var(--papier);border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,.12);padding:20px}
+.rep-tape{position:absolute;top:-12px;left:50%;width:120px;height:24px;transform:translateX(-50%) rotate(-1.5deg);background:var(--jaune);opacity:.85}
+
+/* Calendrier */
+.rep-nav{display:flex;align-items:center;justify-content:space-between;margin:8px 0 14px}
+.rep-month{margin:0;font-size:1.25rem;text-transform:capitalize;color:var(--vert-f)}
+.rep-arrow{width:42px;height:38px;border:0;border-radius:10px;background:var(--vert);color:#fff;font-size:1.1rem;cursor:pointer;box-shadow:0 3px 0 var(--vert-f)}
+.rep-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.rep-dow{text-align:center;font-size:.7rem;font-weight:700;color:#6b6b6b;padding-bottom:4px}
+.rep-day{aspect-ratio:1;border:1.5px dashed #b9b6a6;border-radius:8px;background:transparent;font:inherit;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rep-day.has{background:#eef3e6;border-style:solid;border-color:var(--vert)}
+.rep-day.sel{outline:3px solid var(--jaune);outline-offset:1px}
+.rep-dots{display:flex;gap:3px;height:6px}
+.rep-dots i,.rep-legend i,.rep-chip i{display:inline-block;width:8px;height:8px;border-radius:50%}
+.rep-legend{font-size:.8rem;color:#555;margin:14px 0 0}
+
+/* En-tête, filtres */
+.rep-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rep-head h1{margin:0;font-size:2rem;color:var(--vert-f)}
+.rep-btn{border:0;border-radius:10px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;background:var(--vert);color:#fff;box-shadow:0 3px 0 var(--vert-f)}
+.rep-btn.ghost{background:#e6e2d0;color:#333;box-shadow:0 3px 0 #c8c3ab}
+.rep-btn.danger{background:var(--rouge);box-shadow:0 3px 0 #8f2119}
+.rep-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.rep-chip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #c8c3ab;background:var(--papier);border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+.rep-chip.on{border-color:var(--vert);background:#e3ecd8;font-weight:700}
+.rep-filter{background:#fdeec4;border-radius:8px;padding:8px 12px;margin:0 0 14px}
+.rep-filter button{margin-left:8px;border:0;background:none;color:var(--vert);font:inherit;font-weight:700;text-decoration:underline;cursor:pointer}
+
+/* Liste d'objets */
+.rep-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.rep-item{border-left:8px solid var(--jaune)}
+.rep-item h3{margin:0;font-size:1.15rem;color:var(--vert-f)}
+.rep-item p{margin:8px 0 0}
+.rep-item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.rep-item-top select{border:0;border-radius:8px;color:#fff;font-weight:700;padding:5px 8px;font-size:.8rem;cursor:pointer}
+.rep-sub{color:#666;font-size:.9rem}
+.rep-dates{font-size:.88rem}
+.rep-notes{font-size:.88rem;background:#f1eedf;border-radius:6px;padding:6px 8px}
+.rep-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
+.rep-empty{text-align:center;color:#555;margin-bottom:18px}
+
+/* Formulaire */
+.rep-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:16px;z-index:50;overflow:auto}
+.rep-form{width:min(560px,100%);display:grid;gap:12px;max-height:94vh;overflow:auto}
+.rep-form h2{margin:0;color:var(--vert-f)}
+.rep-form label{display:grid;gap:4px;font-weight:700;font-size:.85rem}
+.rep-form input,.rep-form select,.rep-form textarea{font:inherit;font-weight:400;padding:8px 10px;border:1.5px solid #c8c3ab;border-radius:8px;background:#fff}
+.rep-form input:focus,.rep-form select:focus,.rep-form textarea:focus,.rep button:focus-visible{outline:3px solid var(--jaune);outline-offset:1px}
+.rep-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+@media(max-width:820px){.rep{grid-template-columns:1fr;padding:16px}.rep-row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<section class="rep">
+
+  <!-- Calendrier -->
+  <div class="rep-cal rep-card">
+    <span class="rep-tape"></span>
+    <div class="rep-nav">
+      <button class="rep-arrow" id="prev" aria-label="Mois précédent">←</button>
+      <h2 class="rep-month" id="mois"></h2>
+      <button class="rep-arrow" id="next" aria-label="Mois suivant">→</button>
+    </div>
+    <div class="rep-grid" id="grid"></div>
+    <p class="rep-legend">
+      <i style="background:#2f6b35"></i> objet déposé &nbsp;
+      <i style="background:#f0a818"></i> réparation prévue
+    </p>
+  </div>
+
+  <!-- Liste des objets -->
+  <div class="rep-main">
+    <div class="rep-head">
+      <h1>Objets à réparer</h1>
+      <button class="rep-btn" id="add">+ Enregistrer un objet</button>
+    </div>
+    <div class="rep-chips" id="chips"></div>
+    <p class="rep-filter" id="filterbar" hidden></p>
+    <div class="rep-card rep-empty" id="empty" hidden></div>
+    <div class="rep-list" id="list"></div>
+  </div>
+
+  <!-- Formulaire (fenêtre) -->
+  <div class="rep-overlay" id="overlay" hidden>
+    <form class="rep-card rep-form" id="form">
+      <h2 id="form-title">Nouvel objet</h2>
+      <label>Objet<input name="objet" required placeholder="Lampe de chevet, chaise paillée…"></label>
+      <div class="rep-row">
+        <label>Nom du propriétaire<input name="proprietaire" required></label>
+        <label>Téléphone ou e-mail<input name="contact"></label>
+      </div>
+      <label>Catégorie<select name="categorie" id="f-categorie"></select></label>
+      <label>Problème constaté<textarea name="probleme" rows="3"></textarea></label>
+      <div class="rep-row">
+        <label>Date de dépôt<input type="date" name="depot" required></label>
+        <label>Réparation prévue le<input type="date" name="rdv"></label>
+      </div>
+      <label>Statut<select name="statut" id="f-statut"></select></label>
+      <label>Notes internes<textarea name="notes" rows="2" placeholder="Pièces à commander, bénévole référent…"></textarea></label>
+      <div class="rep-actions">
+        <button type="button" class="rep-btn ghost" id="cancel">Annuler</button>
+        <button type="submit" class="rep-btn">Enregistrer</button>
+      </div>
+    </form>
+  </div>
+
+</section>
+<script>/* ---------- Données ---------- */
+const STATUTS = {
+  recu:        { label: "Reçu",          color: "#f0a818" },
+  diagnostic:  { label: "En diagnostic", color: "#8a6bbd" },
+  reparation:  { label: "En réparation", color: "#2f6b35" },
+  repare:      { label: "Réparé",        color: "#2a8f5c" },
+  rendu:       { label: "Rendu",         color: "#6b7280" },
+  irreparable: { label: "Irréparable",   color: "#c8372d" },
+};
+const CATEGORIES = ["Lampe / électrique", "Chaise / meuble", "Vélo", "Livre / papier", "Vêtement / textile", "Autre"];
+const MOIS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const JOURS = ["LUN","MAR","MER","JEU","VEN","SAM","DIM"];
+const KEY = "ressourcerie-reparations-v1";
+
+/* ---------- État ---------- */
+let items = charger();
+if (!items.length) items = [
+  {id:"d1",objet:"Lampe de chevet",proprietaire:"Marie D.",contact:"06 12 34 56 78",categorie:"Lampe / électrique",probleme:"Ne s’allume plus, câble abîmé.",depot:"2026-11-03",rdv:"2026-11-14",statut:"diagnostic",notes:"Prévoir un câble 2 fils."},
+  {id:"d2",objet:"Chaise paillée",proprietaire:"Jean-Paul R.",contact:"jp@mail.fr",categorie:"Chaise / meuble",probleme:"Assise percée.",depot:"2026-11-07",rdv:"2026-11-21",statut:"recu",notes:""},
+  {id:"d3",objet:"Vélo enfant",proprietaire:"Sofia B.",contact:"07 98 76 54 32",categorie:"Vélo",probleme:"Chaîne qui saute, frein arrière mou.",depot:"2026-11-10",rdv:"2026-11-14",statut:"reparation",notes:"Bénévole : Karim."},
+  {id:"d4",objet:"Livre de cuisine",proprietaire:"Hélène T.",contact:"",categorie:"Livre / papier",probleme:"Reliure décollée.",depot:"2026-10-27",rdv:"2026-11-05",statut:"repare",notes:""}
+];
+let cur = new Date(2026, 10, 1); // mois affiché
+let jour = null;                 // jour sélectionné (AAAA-MM-JJ)
+let filtre = "tous";
+let editId = null;
+
+/* ---------- Utilitaires ---------- */
+const $ = (id) => document.getElementById(id);
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fr = (s) => s ? new Date(s + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "long" }) : "—";
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+function charger() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; }
+}
+function sauvegarder() {
+  try { localStorage.setItem(KEY, JSON.stringify(items)); } catch {}
+}
+
+/* ---------- Calendrier ---------- */
+function renderCalendrier() {
+  const annee = cur.getFullYear(), mois = cur.getMonth();
+  $("mois").textContent = `${MOIS[mois]} ${annee}`;
+
+  // dépôts et réparations prévues, par date
+  const parJour = {};
+  items.forEach((it) => {
+    if (it.depot) (parJour[it.depot] ||= { depot: 0, rdv: 0 }).depot++;
+    if (it.rdv)   (parJour[it.rdv]   ||= { depot: 0, rdv: 0 }).rdv++;
+  });
+
+  const decalage = (new Date(annee, mois, 1).getDay() + 6) % 7; // semaine qui commence le lundi
+  const nbJours = new Date(annee, mois + 1, 0).getDate();
+
+  let html = JOURS.map((j) => `<div class="rep-dow">${j}</div>`).join("");
+  html += "<div></div>".repeat(decalage);
+  for (let n = 1; n <= nbJours; n++) {
+    const d = iso(new Date(annee, mois, n));
+    const info = parJour[d];
+    html += `<button class="rep-day${info ? " has" : ""}${jour === d ? " sel" : ""}" data-jour="${d}" aria-label="${n} ${MOIS[mois]}">
+      ${n}
+      <span class="rep-dots">
+        ${info?.depot ? '<i style="background:#2f6b35"></i>' : ""}
+        ${info?.rdv ? '<i style="background:#f0a818"></i>' : ""}
+      </span></button>`;
+  }
+  $("grid").innerHTML = html;
+}
+
+/* ---------- Filtres ---------- */
+function renderFiltres() {
+  const compte = (s) => items.filter((i) => i.statut === s).length;
+  let html = `<button class="rep-chip${filtre === "tous" ? " on" : ""}" data-filtre="tous">Tous (${items.length})</button>`;
+  for (const [k, s] of Object.entries(STATUTS)) {
+    html += `<button class="rep-chip${filtre === k ? " on" : ""}" data-filtre="${k}">
+      <i style="background:${s.color}"></i> ${s.label} (${compte(k)})</button>`;
+  }
+  $("chips").innerHTML = html;
+
+  const bar = $("filterbar");
+  bar.hidden = !jour;
+  if (jour) bar.innerHTML = `Objets du ${fr(jour)} <button id="reset-jour">Voir tout</button>`;
+}
+
+/* ---------- Liste ---------- */
+function renderListe() {
+  const liste = items
+    .filter((it) => filtre === "tous" || it.statut === filtre)
+    .filter((it) => !jour || it.depot === jour || it.rdv === jour)
+    .sort((a, b) => (a.rdv || a.depot || "9").localeCompare(b.rdv || b.depot || "9"));
+
+  const vide = $("empty");
+  vide.hidden = liste.length > 0;
+  vide.textContent = items.length === 0
+    ? "Aucun objet pour l’instant. Enregistrez le premier avec le bouton ci-dessus."
+    : "Aucun objet ne correspond à ce filtre.";
+
+  $("list").innerHTML = liste.map((it) => `
+    <article class="rep-card rep-item" style="border-left-color:${STATUTS[it.statut].color}">
+      <div class="rep-item-top">
+        <h3>${esc(it.objet)}</h3>
+        <select data-statut="${it.id}" style="background:${STATUTS[it.statut].color}" aria-label="Statut">
+          ${Object.entries(STATUTS).map(([k, s]) => `<option value="${k}"${k === it.statut ? " selected" : ""}>${s.label}</option>`).join("")}
+        </select>
+      </div>
+      <p class="rep-sub">${esc(it.categorie)} · ${esc(it.proprietaire)}${it.contact ? ` (${esc(it.contact)})` : ""}</p>
+      ${it.probleme ? `<p>${esc(it.probleme)}</p>` : ""}
+      <p class="rep-dates"><b>Déposé :</b> ${fr(it.depot)} &nbsp; <b>Réparation prévue :</b> ${fr(it.rdv)}</p>
+      ${it.notes ? `<p class="rep-notes">Note : ${esc(it.notes)}</p>` : ""}
+      <div class="rep-actions">
+        <button class="rep-btn ghost" data-edit="${it.id}">Modifier</button>
+        <button class="rep-btn danger" data-del="${it.id}">Supprimer</button>
+      </div>
+    </article>`).join("");
+}
+
+function render() {
+  renderCalendrier();
+  renderFiltres();
+  renderListe();
+}
+
+/* ---------- Formulaire ---------- */
+const form = $("form");
+
+function ouvrirForm(it) {
+  editId = it?.id || null;
+  $("form-title").textContent = it ? "Modifier l’objet" : "Nouvel objet";
+  form.reset();
+  const base = it || { categorie: CATEGORIES[0], statut: "recu", depot: jour || iso(new Date()) };
+  for (const [k, v] of Object.entries(base)) if (form.elements[k]) form.elements[k].value = v ?? "";
+  $("overlay").hidden = false;
+}
+const fermerForm = () => { $("overlay").hidden = true; };
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const data = Object.fromEntries(new FormData(form));
+  if (editId) items = items.map((i) => (i.id === editId ? { ...i, ...data } : i));
+  else items.push({ id: crypto.randomUUID(), ...data });
+  sauvegarder();
+  fermerForm();
+  render();
+});
+
+/* ---------- Événements ---------- */
+$("prev").onclick = () => { cur = new Date(cur.getFullYear(), cur.getMonth() - 1, 1); render(); };
+$("next").onclick = () => { cur = new Date(cur.getFullYear(), cur.getMonth() + 1, 1); render(); };
+$("add").onclick = () => ouvrirForm();
+$("cancel").onclick = fermerForm;
+$("overlay").addEventListener("click", (e) => { if (e.target.id === "overlay") fermerForm(); });
+
+$("grid").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-jour]");
+  if (!b) return;
+  jour = jour === b.dataset.jour ? null : b.dataset.jour;
+  render();
+});
+$("chips").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-filtre]");
+  if (b) { filtre = b.dataset.filtre; render(); }
+});
+$("filterbar").addEventListener("click", (e) => {
+  if (e.target.id === "reset-jour") { jour = null; render(); }
+});
+$("list").addEventListener("click", (e) => {
+  const edit = e.target.closest("[data-edit]");
+  const del = e.target.closest("[data-del]");
+  if (edit) ouvrirForm(items.find((i) => i.id === edit.dataset.edit));
+  if (del && confirm("Supprimer cet objet ?")) {
+    items = items.filter((i) => i.id !== del.dataset.del);
+    sauvegarder();
+    render();
+  }
+});
+$("list").addEventListener("change", (e) => {
+  const id = e.target.dataset.statut;
+  if (!id) return;
+  items = items.map((i) => (i.id === id ? { ...i, statut: e.target.value } : i));
+  sauvegarder();
+  render();
+});
+
+/* ---------- Démarrage ---------- */
+$("f-categorie").innerHTML = CATEGORIES.map((c) => `<option>${c}</option>`).join("");
+$("f-statut").innerHTML = Object.entries(STATUTS).map(([k, s]) => `<option value="${k}">${s.label}</option>`).join("");
+render();
+</script>
+</body>
+</html>
