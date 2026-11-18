@@ -63,7 +63,8 @@ if [ "$1" = "--all" ]; then
     fi
 
     shopt -s nullglob
-    files=( "$MYSQL_DIR"/*.sql )
+    # requetes.sql est volontairement exclu : il contient des modifications à lancer une par une
+    files=( "$MYSQL_DIR/creation.sql" "$MYSQL_DIR/donnees.sql" )
 
     if [ "${#files[@]}" -eq 0 ]; then
         echo "No SQL files found in $MYSQL_DIR."
