@@ -20,7 +20,7 @@ WHERE nom LIKE '%dup%' OR email LIKE '%dup%';
 -- US4 : liste des dons avec le donateur
 SELECT d.id, d.titre, d.categorie, d.statut, u.nom AS donateur
 FROM dons d
-JOIN utilisateurs u ON u.id = d.utilisateur_id
+LEFT JOIN utilisateurs u ON u.id = d.utilisateur_id
 ORDER BY d.date_don DESC;
 
 -- US4 : filtrer les dons par statut
